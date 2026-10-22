@@ -1,0 +1,56 @@
+waypoint_patrol_node:
+  ros__parameters:
+    autonomous: true
+
+    # Pose awal spawn di dock arena LEFT (skala normal 30x30 m)
+    initial_world_pose: [10.60, -12.80, 1.5708]
+
+    # Urutan 10 pasang gerbang arena LEFT (buoy 03 -> 02 -> 01 -> 07..04 -> 08..10)
+    gate_red_world: [
+       9.40,  -5.20,   # Gerbang 1 (buoy 03)
+       8.30,  -2.10,   # Gerbang 2 (buoy 02 - belok kiri ke tengah)
+       9.60,   1.00,   # Gerbang 3 (buoy 01 - lurus/kanan)
+       4.00,   7.20,   # Gerbang 4 (buoy 07)
+       2.00,   7.20,   # Gerbang 5 (buoy 06)
+       0.00,   7.20,   # Gerbang 6 (buoy 05)
+      -2.00,   7.20,   # Gerbang 7 (buoy 04)
+      -9.30,   3.00,   # Gerbang 8 (buoy 08)
+     -10.80,   0.00,   # Gerbang 9 (buoy 09)
+     -11.00,  -2.90    # Gerbang 10 (buoy 10)
+    ]
+    gate_green_world: [
+      11.30,  -5.40,   # Gerbang 1 (buoy 03)
+      10.20,  -2.10,   # Gerbang 2 (buoy 02 - belok kiri ke tengah)
+      11.50,   0.70,   # Gerbang 3 (buoy 01 - lurus/kanan)
+       4.00,   9.20,   # Gerbang 4 (buoy 07)
+       2.00,   9.20,   # Gerbang 5 (buoy 06)
+       0.00,   9.20,   # Gerbang 6 (buoy 05)
+      -2.00,   9.20,   # Gerbang 7 (buoy 04)
+     -11.20,   3.60,   # Gerbang 8 (buoy 08)
+     -12.80,   0.20,   # Gerbang 9 (buoy 09)
+     -13.00,  -3.00    # Gerbang 10 (buoy 10)
+    ]
+
+    # Target kotak lantai & dermaga (skala normal 30x30 m)
+    blue_target_world: [-9.70, -8.60]
+    green_target_world: [-7.10, -11.80]
+    dock_ramp_approach_world: [10.60, -10.40]
+    dock_world_pose: [10.60, -12.80, 1.5708]
+
+    # Jarak pendekatan & manuver belok (skala 30x30 m)
+    gate_approach_distance: 1.6
+    gate_exit_distance: 0.7
+    gate_turn_distance: 1.2
+    target_standoff_distance: 1.5
+    capture_stable_frames: 6
+
+    # Kecepatan & toleransi (skala 30x30 m)
+    max_linear_speed: 0.45
+    cross_speed: 0.25
+    approach_speed: 0.15
+    max_angular_speed: 0.75
+    waypoint_tolerance: 0.35
+    gate_center_tolerance: 0.15
+    target_center_tolerance: 0.15
+
+    capture_directory: ~/Documents/UTSRE502/captures

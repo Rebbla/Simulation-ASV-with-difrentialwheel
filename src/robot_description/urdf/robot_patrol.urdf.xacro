@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_patrol">
+  <material name="body_blue"><color rgba="0.79 0.82 0.93 1"/></material>
+  <material name="wheel_gray"><color rgba="0.75 0.75 0.75 1"/></material>
+  <material name="camera_black"><color rgba="0.08 0.08 0.08 1"/></material>
+
+  <link name="base_footprint"/>
+  <link name="base">
+    <inertial>
+      <origin xyz="0.0052003 -0.0001287 0.0624304" rpy="0 0 0"/>
+      <mass value="0.8246764"/>
+      <inertia ixx="0.000751968" ixy="-3.386e-7" ixz="1.329e-7"
+               iyy="0.000720788" iyz="1.824e-7" izz="0.00137729"/>
+    </inertial>
+    <visual name="solidworks_base_assembly">
+      <geometry><mesh filename="package://robot_description/meshes/base.STL"/></geometry>
+      <material name="body_blue"/>
+    </visual>
+    <!-- Simplified collision with ground clearance to prevent scraping -->
+    <collision name="chassis_collision">
+      <origin xyz="0.01425 0 0.058" rpy="0 0 0"/>
+      <geometry><box size="0.17 0.12 0.09"/></geometry>
+    </collision>
+  </link>
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Front Caster Support to prevent chassis dragging on the ground -->
+  <link name="caster_front">
+    <visual>
+      <geometry><sphere radius="0.008"/></geometry>
+      <material name="wheel_gray"/>
+    </visual>
+    <collision>
+      <geometry><sphere radius="0.008"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.015"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+  <joint name="caster_front_joint" type="fixed">
+    <parent link="base"/>
+    <child link="caster_front"/>
+    <!-- Bottom of caster aligns with bottom of wheels at z=-0.002 (axle 0.032 - radius 0.034) -->
+    <origin xyz="0.065 0 0.006" rpy="0 0 0"/>
+  </joint>
+
+  <link name="r_wheel">
+    <inertial>
+      <origin xyz="-4.13e-7 0.009655 1.07e-7" rpy="0 0 0"/>
+      <mass value="0.0246779"/>
+      <inertia ixx="1.01416e-5" ixy="-5.35e-11" ixz="5.24e-10"
+               iyy="1.69693e-5" iyz="3.41e-11" izz="1.01419e-5"/>
+    </inertial>
+    <visual name="right_wheel_visual">
+      <geometry><mesh filename="package://robot_description/meshes/r_wheel.STL"/></geometry>
+      <material name="wheel_gray"/>
+    </visual>
+    <collision name="right_wheel_collision">
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry><cylinder radius="0.034" length="0.028"/></geometry>
+    </collision>
+  </link>
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base"/>
+    <child link="r_wheel"/>
+    <origin xyz="-0.051 -0.0856 0.032" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="l_wheel">
+    <inertial>
+      <origin xyz="4.12e-7 -0.009655 1.10e-7" rpy="0 0 0"/>
+      <mass value="0.0246779"/>
+      <inertia ixx="1.01417e-5" ixy="-5.32e-11" ixz="-5.27e-10"
+               iyy="1.69693e-5" iyz="-3.45e-11" izz="1.01419e-5"/>
+    </inertial>
+    <visual name="left_wheel_visual">
+      <geometry><mesh filename="package://robot_description/meshes/l_wheel.STL"/></geometry>
+      <material name="wheel_gray"/>
+    </visual>
+    <collision name="left_wheel_collision">
+      <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+      <geometry><cylinder radius="0.034" length="0.028"/></geometry>
+    </collision>
+  </link>
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base"/>
+    <child link="l_wheel"/>
+    <origin xyz="-0.051 0.0856 0.032" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="imu">
+    <inertial>
+      <origin xyz="-0.004064 0.000377 -0.001687" rpy="0 0 0"/>
+      <mass value="0.001075"/>
+      <inertia ixx="4.663e-8" ixy="-2.604e-12" ixz="-1.700e-14"
+               iyy="3.735e-8" iyz="-1.772e-14" izz="8.342e-8"/>
+    </inertial>
+    <visual name="imu_visual">
+      <geometry><mesh filename="package://robot_description/meshes/imu.STL"/></geometry>
+      <material name="wheel_gray"/>
+    </visual>
+  </link>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base"/>
+    <child link="imu"/>
+    <origin xyz="-0.008261 -0.000442 0.0391" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_link">
+    <visual name="camera_visual">
+      <geometry><box size="0.05 0.035 0.025"/></geometry>
+      <material name="camera_black"/>
+    </visual>
+    <collision name="camera_collision">
+      <geometry><box size="0.05 0.035 0.025"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.03"/>
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+    </inertial>
+  </link>
+  <joint name="camera_mount_joint" type="fixed">
+    <parent link="base"/>
+    <child link="camera_link"/>
+    <origin xyz="0.08 0 0.13" rpy="0 0.25 0"/>
+  </joint>
+  <link name="camera_optical_frame"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+  </joint>
+
+  <!-- Gazebo Contact and Physics Properties -->
+  <gazebo reference="caster_front">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+  <gazebo reference="r_wheel">
+    <mu1>1.5</mu1>
+    <mu2>1.5</mu2>
+    <kp>1000000.0</kp>
+    <kd>10.0</kd>
+  </gazebo>
+  <gazebo reference="l_wheel">
+    <mu1>1.5</mu1>
+    <mu2>1.5</mu2>
+    <kp>1000000.0</kp>
+    <kd>10.0</kd>
+  </gazebo>
+
+  <gazebo reference="imu">
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <topic>/imu/data</topic>
+    </sensor>
+  </gazebo>
+  <gazebo reference="camera_link">
+    <sensor name="front_rgb_camera" type="camera">
+      <always_on>true</always_on>
+      <update_rate>30</update_rate>
+      <visualize>true</visualize>
+      <topic>/camera/image_raw</topic>
+      <camera>
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+        <clip><near>0.05</near><far>35.0</far></clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>0.1712</wheel_separation>
+      <wheel_radius>0.034</wheel_radius>
+      <topic>/cmd_vel</topic>
+      <odom_topic>/odom</odom_topic>
+      <tf_topic>/tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_footprint</child_frame_id>
+      <odom_publish_frequency>50</odom_publish_frequency>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+      <topic>/joint_states</topic>
+      <joint_name>left_wheel_joint</joint_name>
+      <joint_name>right_wheel_joint</joint_name>
+    </plugin>
+  </gazebo>
+</robot>

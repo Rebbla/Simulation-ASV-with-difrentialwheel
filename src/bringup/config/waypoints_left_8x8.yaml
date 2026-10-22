@@ -1,0 +1,56 @@
+waypoint_patrol_node:
+  ros__parameters:
+    autonomous: true
+
+    # Pose awal spawn di dock arena LEFT (skala kompak 8x8 m)
+    initial_world_pose: [2.83, -3.41, 1.5708]
+
+    # Urutan 10 pasang gerbang arena LEFT (buoy 03 -> 02 -> 01 -> 07..04 -> 08..10)
+    gate_red_world: [
+       2.412,  -1.380,   # Gerbang 1 (buoy 03)
+       2.115,  -0.560,   # Gerbang 2 (buoy 02 - belok kiri ke tengah)
+       2.469,   0.284,   # Gerbang 3 (buoy 01 - belok kanan)
+       1.070,   1.835,   # Gerbang 4 (buoy 07)
+       0.530,   1.835,   # Gerbang 5 (buoy 06)
+       0.000,   1.835,   # Gerbang 6 (buoy 05)
+      -0.530,   1.835,   # Gerbang 7 (buoy 04)
+      -2.401,   0.775,   # Gerbang 8 (buoy 08)
+      -2.797,  -0.008,   # Gerbang 9 (buoy 09)
+      -2.851,  -0.766    # Gerbang 10 (buoy 10)
+    ]
+    gate_green_world: [
+       3.108,  -1.450,   # Gerbang 1 (buoy 03)
+       2.815,  -0.560,   # Gerbang 2 (buoy 02 - belok kiri ke tengah)
+       3.161,   0.176,   # Gerbang 3 (buoy 01 - belok kanan)
+       1.070,   2.535,   # Gerbang 4 (buoy 07)
+       0.530,   2.535,   # Gerbang 5 (buoy 06)
+       0.000,   2.535,   # Gerbang 6 (buoy 05)
+      -0.530,   2.535,   # Gerbang 7 (buoy 04)
+      -3.069,   0.985,   # Gerbang 8 (buoy 08)
+      -3.493,   0.058,   # Gerbang 9 (buoy 09)
+      -3.549,  -0.804    # Gerbang 10 (buoy 10)
+    ]
+
+    # Target kotak lantai & dermaga (skala kompak 8x8 m)
+    blue_target_world: [-2.40, -2.10]
+    green_target_world: [-1.50, -3.60]
+    dock_ramp_approach_world: [2.20, -2.90]
+    dock_world_pose: [2.83, -3.41, 1.5708]
+
+    # Jarak pendekatan & manuver belok proporsional (skala 8x8 m)
+    gate_approach_distance: 0.20
+    gate_exit_distance: 0.18
+    gate_turn_distance: 0.15
+    target_standoff_distance: 0.50
+    capture_stable_frames: 6
+
+    # Kecepatan responsif & stabil (skala 8x8 m)
+    max_linear_speed: 0.25
+    cross_speed: 0.14
+    approach_speed: 0.10
+    max_angular_speed: 1.30
+    waypoint_tolerance: 0.16
+    gate_center_tolerance: 0.15
+    target_center_tolerance: 0.15
+
+    capture_directory: ~/Documents/UTSRE502/captures

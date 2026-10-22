@@ -1,0 +1,56 @@
+waypoint_patrol_node:
+  ros__parameters:
+    autonomous: true
+
+    # Pose awal spawn di dock arena RIGHT (3x3 m)
+    initial_world_pose: [-1.06, -1.28, 1.5708]
+
+    # 10 Pasang koordinat gerbang (red, green) arena RIGHT
+    gate_red_world: [
+      -0.96,  0.10,
+      -0.83, -0.21,
+      -0.94, -0.52,
+       0.20,  0.72,
+       0.00,  0.72,
+      -0.20,  0.72,
+      -0.40,  0.72,
+       0.93,  0.30,
+       1.08,  0.00,
+       1.10, -0.29
+    ]
+    gate_green_world: [
+      -1.15,  0.07,
+      -1.02, -0.21,
+      -1.13, -0.54,
+       0.20,  0.92,
+       0.00,  0.92,
+      -0.20,  0.92,
+      -0.40,  0.92,
+       1.12,  0.36,
+       1.28,  0.02,
+       1.30, -0.30
+    ]
+
+    # Target kotak lantai & dock
+    green_target_world: [0.71, -1.18]
+    blue_target_world: [0.97, -0.86]
+    dock_world_pose: [-1.06, -1.28, 1.5708]
+    dock_ramp_approach_world: [-1.06, -1.04]
+
+    # Jarak & manuver waypoint
+    gate_approach_distance: 0.18
+    gate_exit_distance: 0.08
+    gate_turn_distance: 0.15
+    target_standoff_distance: 0.22
+    capture_stable_frames: 6
+
+    # Kecepatan & toleransi (skala arena 3x3)
+    max_linear_speed: 0.12
+    cross_speed: 0.05
+    approach_speed: 0.035
+    max_angular_speed: 0.65
+    waypoint_tolerance: 0.07
+    gate_center_tolerance: 0.12
+    target_center_tolerance: 0.12
+
+    capture_directory: ~/Documents/UTSRE502/captures
